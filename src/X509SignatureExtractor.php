@@ -3,6 +3,13 @@ declare(strict_types=1);
 
 namespace Zatca\Tools;
 
+/**
+ * Extracts digital signatures from X.509 certificates
+ * 
+ * @author MOHAMMED BU SAEED
+ * @github github.com/busaeed
+ * @linkedin linkedin.com/in/busaeed
+ */
 class X509SignatureExtractor
 {
     public static function extract($derX509Certificate): string

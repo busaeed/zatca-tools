@@ -1,16 +1,15 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * IMPORTANT NOTE:
+ * This is just a tester and not part of the library.
+ * First generate invoices by fatoora and tester, then compare them.
+ */
+
 namespace Zatca\Tools;
 
-/**
- * Signs invoices according to ZATCA e-invoicing standards
- * 
- * @author MOHAMMED BU SAEED
- * @github github.com/busaeed
- * @linkedin linkedin.com/in/busaeed
- */
-class ZatcaInvoiceSigner
+class ZatcaInvoiceSignerTester
 {
     private const EXCLUDED_TAGS = array(
         "//*[local-name()='Invoice']//*[local-name()='UBLExtensions']",
@@ -19,18 +18,22 @@ class ZatcaInvoiceSigner
     );
 
     private string $derPrivateKey;
+    
     private string $derX509Certificate;
+    
     private string $xmlInvoice;
 
     private array $templateValues;
+    
     private array $qrCodeValues;
 
     private \OpenSSLAsymmetricKey $privateKey;
 
     private \DOMDocument $invoiceDom;
+    
     private \DOMXPath $xpath;
 
-    public function __construct(string $derPrivateKey, string $derX509Certificate, string $xmlInvoice)
+    public function __construct(string $derPrivateKey, string $derX509Certificate, string $xmlInvoice, private string $signingTime, private string $signatureValue)
     {
         $this->derPrivateKey = $derPrivateKey;
         $this->derX509Certificate = $derX509Certificate;
@@ -122,13 +125,13 @@ class ZatcaInvoiceSigner
 
     private function generateDigitalSignature(string $invoiceHash): void
     {
-        $this->templateValues["SIGNING_TIME"] = (new \DateTime())->format('Y-m-d\TH:i:s');
+        $this->templateValues["SIGNING_TIME"] = $this->signingTime;
 
         $success = openssl_sign($invoiceHash, $rawSignatureValue, $this->privateKey, OPENSSL_ALGO_SHA256);
         if (!$success) {
             throw new \RuntimeException("Unable to generate digital signature.");
         }
-        $this->templateValues["SIGNATURE_VALUE"] = base64_encode($rawSignatureValue);
+        $this->templateValues["SIGNATURE_VALUE"] = $this->signatureValue;
     }
 
     private function generateCertificateHash(): void
@@ -158,7 +161,7 @@ class ZatcaInvoiceSigner
                                 </xades:SignedProperties>
 XML;
 
-        $signedPropertiesTemplate = str_replace("\r\n", "\n", $signedPropertiesTemplate); //normalizing
+        $signedPropertiesTemplate = str_replace("\r\n", "\n", $signedPropertiesTemplate);
 
         $this->templateValues["SIGNED_PROPERTIES_DIGEST_VALUE"] = base64_encode(hash("sha256", $signedPropertiesTemplate, false));
     }
@@ -276,7 +279,7 @@ XML;
 </ext:UBLExtensions>
 XML;
 
-    $ublExtensionsTag = str_replace("\r\n", "\n", $ublExtensionsTag); //normalizing
+    $ublExtensionsTag = str_replace("\r\n", "\n", $ublExtensionsTag);
 
     $this->xmlInvoice = preg_replace('/(<Invoice\b[^>]*>)/', '$1' . $ublExtensionsTag, $this->xmlInvoice, 1);
     }
@@ -295,7 +298,7 @@ XML;
 </cac:Signature>
 XML;
 
-    $qrCodeTag = str_replace("\r\n", "\n", $qrCodeTag); //normalizing
+    $qrCodeTag = str_replace("\r\n", "\n", $qrCodeTag);
 
     $this->xmlInvoice = preg_replace('/(<cac:AccountingSupplierParty\b[^>]*>)/', $qrCodeTag . '$1', $this->xmlInvoice, 1);
     }
