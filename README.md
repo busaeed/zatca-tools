@@ -1,7 +1,7 @@
 # ZATCA Tools
 
 [![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.0-blue.svg)](https://www.php.net/)
-[![License](https://img.shields.io/github/license/busaeed/zatca-tools)](LICENSE)
+[![License](https://img.shields.io/github/license/busaeed/zatca-tools)](MIT)
 [![Packagist](https://img.shields.io/packagist/v/busaeed/zatca-tools)](https://packagist.org/packages/busaeed/zatca-tools)
 
 ZATCA Tools is a small PHP library that helps with e-invoicing tasks like signing invoices and making QR codes for ZATCA. It's easy to use and can be extended later to support more features.
