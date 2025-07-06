@@ -1,0 +1,25 @@
+{
+    "name": "busaeed/zatca-tools",
+    "description": "ZATCA Tools is a small PHP library that helps with e-invoicing tasks like signing invoices and making QR codes for ZATCA. It's easy to use and can be extended later to support more features.",
+    "type": "library",
+    "require": {
+        "php": ">=8.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Zatca\\Tools\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MOHAMMED BU SAEED",
+            "homepage": "https://github.com/busaeed"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/busaeed/zatca-tools",
+        "chat": "https://www.linkedin.com/in/busaeed"
+    },
+    "minimum-stability": "stable"
+}
