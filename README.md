@@ -1,8 +1,19 @@
 # ZATCA Tools
 
-[![PHP](https://img.shields.io/badge/PHP-8.0%2B-blue)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.0-blue.svg)](https://www.php.net/)
+[![License](https://img.shields.io/github/license/busaeed/zatca-tools)](LICENSE)
+[![Packagist](https://img.shields.io/packagist/v/busaeed/zatca-tools)](https://packagist.org/packages/busaeed/zatca-tools)
 
 ZATCA Tools is a small PHP library that helps with e-invoicing tasks like signing invoices and making QR codes for ZATCA. It's easy to use and can be extended later to support more features.
+
+---
+
+## 🔔 Important Notes
+
+1. **This is not an official library.** It was built independently and is not approved or maintained by ZATCA.
+2. It was tested using all official ZATCA sample invoices, and results matched those from the official Fatoora SDK. However, **use it at your own risk**.
+3. You should always follow ZATCA's official sample XML structures. Customizing them may cause errors or rejection.
+4. If you find a bug or need help, feel free to **open a GitHub issue** or **contact me on [LinkedIn](https://www.linkedin.com/in/busaeed)**.
 
 ---
 
@@ -10,7 +21,6 @@ ZATCA Tools is a small PHP library that helps with e-invoicing tasks like signin
 
 - PHP 8.0 or higher
 - OpenSSL extension enabled
-- Composer
 
 ---
 
